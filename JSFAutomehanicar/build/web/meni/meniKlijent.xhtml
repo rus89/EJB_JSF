@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+    </h:head>
+    <h:body>
+
+        <div class="meniAdmin">
+
+            <h:form id="frmMeniKlijent">
+
+                <p:menubar id="glavniMeni" autoDisplay="false">
+
+                    <p:menuitem id="pocetna" value="Pocetna strana" action="/pocetna.xhtml" ajax="false"/>
+
+                    <p:submenu id="automobil" label="Automobili">
+                        <p:menuitem id="unosAutomobila" value="Unos automobila" action="#{radSaAutomobilima.dodavanjeAutomobila()}" ajax="false" icon="ui-icon-plusthick"/>
+                        <p:menuitem id="prikazAutomobila" value="Prikaz svih automobila" action="/radSaAutomobilima/prikazSvihAutomobila.xhtml" ajax="false" icon="ui-icon-search"/>
+                        <p:menuitem id="promenaAutomobila" value="Promena podataka" action="/radSaAutomobilima/promenaPodatakaAutomobila.xhtml" ajax="false" icon="ui-icon-wrench"/>
+                        <p:menuitem id="brisanjeAutomobila" value="Brisanje automobila" action="/radSaAutomobilima/brisanjeAutomobila.xhtml" ajax="false" icon="ui-icon-trash"/>
+                    </p:submenu>
+
+
+
+
+                    <p:submenu id="vlasnikAutomobila" label="Vlasnik automobila">
+
+
+                        <p:menuitem id="unosVlasnika" value="Unos vlasnika" action="#{radSaVlasnikomAutomobila.dodavanjeVlasnika()}"  ajax="false" icon="ui-icon-person"/>
+                        <p:menuitem id="prikazVlasnika" value="Prikaz svih vlasnika" action="/radSaVlasnikom/prikazSvihVlasnika.xhtml" ajax="false" icon="ui-icon-info"/> 
+                        <p:menuitem id="promenaVlasnika" value="Promena podataka" action="/radSaVlasnikom/promenaPodatakaVlasnika.xhtml" ajax="false" icon="ui-icon-wrench"/>
+                        <p:menuitem id="brisanjeVlasnika" value="Brisanje vlasnika" action="/radSaVlasnikom/brisanjeVlasnika.xhtml" ajax="false" icon="ui-icon-trash"/>
+
+
+                    </p:submenu>
+
+
+
+                    <p:submenu id="logovanje" label="Logovanje">
+                        <p:menuitem id="izlogujSe" value="Izloguj se" action="#{logovanje.izlogujSe()}" ajax="false" icon="ui-icon-closethick"/>
+                    </p:submenu>
+
+                </p:menubar>
+
+            </h:form>
+
+        </div>
+
+
+
+
+    </h:body>
+</html>
+

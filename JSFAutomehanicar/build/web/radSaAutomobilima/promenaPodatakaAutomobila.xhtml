@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Promena podataka automobila</title>
+        
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+        <script type="text/javascript" src="js/jquery-1.8.1.js"> </script>
+        <script type="text/javascript" src="#{request.contextPath}/js/sat.js"></script>
+    </h:head>
+
+
+
+
+    <h:body>
+
+
+        <ui:include src="/meni/meniKlijent.xhtml"/>
+
+        <h:form id="frmPromenaPodataka">
+
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+            <p class="naslov">Izmena podataka automobila</p>
+
+            <p:contextMenu for="tblPromenaPodatakaAutomobila">
+                <p:menuitem id="btnIzmena" value="Izmeni" icon="ui-icon-wrench" action="#{radSaAutomobilima.izmeniAutomobil()}" ajax="false"/>
+            </p:contextMenu>
+
+
+
+            <p:dataTable id="tblPromenaPodatakaAutomobila" var="automobili" value="#{radSaAutomobilima.listaAutomobila}" selection="#{radSaAutomobilima.automobil}" selectionMode="single" rowKey="#{automobili.sifraAutomobila}" paginator="true" rows="5" rowsPerPageTemplate="5,10,15" filteredValue="#{radSaAutomobilima.filtriraniAutomobili}" emptyMessage="Nije pronadjen nijedan rezultat!" styleClass="tabela" >
+
+
+                <p:column id="sifra" headerText="Sifra automobila" filterBy="#{automobili.sifraAutomobila}">
+                    <h:outputText value="#{automobili.sifraAutomobila}"/>
+                </p:column>
+
+                <p:column id="ime" headerText="Broj registracije" filterBy="#{automobili.brojRegistracije}">
+                    <h:outputText value="#{automobili.brojRegistracije}"/>
+                </p:column>
+
+
+                <p:column id="prezime" headerText="Marka automobila" filterBy="#{automobili.model.sifraMarke}">
+                    <h:outputText value="#{automobili.model.sifraMarke}"/>
+                </p:column>
+
+
+                <p:column id="korisnicko" headerText="Model automobila" filterBy="#{automobili.model}">
+                    <h:outputText value="#{automobili.model}"/>
+                </p:column>
+
+
+                <p:column id="jmbg" headerText="Vlasnik" filterBy="#{automobili.sifraVlasnika}">
+                    <h:outputText value="#{automobili.sifraVlasnika}"/>
+                </p:column>
+
+                <f:facet name="footer">                            
+                    <p:commandButton id="btnIzmeni" value="Izmeni" icon="ui-icon-wrench" action="#{radSaAutomobilima.izmeniAutomobil()}" ajax="false"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </h:form>
+
+
+    </h:body>
+</html>

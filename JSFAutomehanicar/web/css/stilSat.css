@@ -1,0 +1,8 @@
+/** { margin:0; padding:0; border-width: 0; }
+body { color:#000; background:#fff url(../slike/sat/back.jpg) no-repeat; }*/
+
+#wrap { position:absolute !important; width:340px; height:70px; background: url(../slike/sat/black.png); border:solid 1px #000; text-align:left; overflow:hidden; margin-top: 0px !important; bottom: 20px; right: 20px; float: right; bottom: 0; }
+
+#wrap img.time { float:left; }
+
+#wrap #cover { position:absolute; top:0; left:0; width:340px; height:70px; background:url(../slike/sat/fade.png) repeat-x; }

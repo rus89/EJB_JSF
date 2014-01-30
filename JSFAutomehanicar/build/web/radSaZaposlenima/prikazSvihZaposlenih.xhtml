@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Prikaz svih zaposlenih</title>        
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+
+
+
+
+    <h:body>
+
+        <ui:include src="/meni/meniAdmin.xhtml"/>
+      
+
+        <h:form id="frmPrikazZaposlenih">
+            
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+            <p class="naslov">Prikaz svih zaposlenih</p>
+
+
+            <p:dataTable id="tblPrikazSvihZaposlenih" var="zaposleni" value="#{radSaZaposlenima.listaZaposlenih}" widgetVar="zaposleniTabela" paginator="true" rows="5" rowsPerPageTemplate="5,10,15" filteredValue="#{radSaZaposlenima.filtriraniZaposleni}" emptyMessage="Nije pronadjen nijedan zaposleni!" styleClass="tabela">
+
+
+
+                <p:column id="ime" headerText="Ime" filterBy="#{zaposleni.ime}">
+                    <h:outputText value="#{zaposleni.ime}"/>
+                </p:column>
+
+
+                <p:column id="prezime" headerText="Prezime" filterBy="#{zaposleni.prezime}">
+                    <h:outputText value="#{zaposleni.prezime}"/>
+                </p:column>
+
+
+                <p:column id="korisnicko" headerText="Korisnicko ime" filterBy="#{zaposleni.username}">
+                    <h:outputText value="#{zaposleni.username}"/>
+                </p:column>
+
+
+                <p:column id="jmbg" headerText="JMBG" filterBy="#{zaposleni.jmbg}">
+                    <h:outputText value="#{zaposleni.jmbg}"/>
+                </p:column>
+
+
+                <p:column id="datumRodjenja" headerText="Datum rodjenja">
+                    <h:outputText value="#{zaposleni.datumRodjenja}">
+                        <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Belgrade"/>
+                    </h:outputText>
+                </p:column>
+
+
+
+                <p:column style="width: 4%;">
+                    <p:commandButton id="btnDetalji" update=":frmPrikazZaposlenih:detalji" oncomplete="detaljiZaposlenog.show()" icon="ui-icon-search" title="Detalji">
+                        <f:setPropertyActionListener value="#{zaposleni}" target="#{radSaZaposlenima.selektovaniZaposleni}"/>
+                    </p:commandButton>
+                </p:column>
+
+
+
+            </p:dataTable>
+
+            <p:dialog header="Detalji o zaposlenom" widgetVar="detaljiZaposlenog" resizable="false" id="zaposleniDijalog" showEffect="fade" hideEffect="fade" modal="true">
+
+                <h:panelGrid id="detalji" columns="2" cellpadding="4" style="margin: 0px auto;">
+
+                    <h:outputText value="Sifra zaposlenog:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.sifraZaposlenog}" style="font-weight:bold"/>
+
+                    <h:outputText value="Ime:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.ime}" style="font-weight:bold"/>
+
+                    <h:outputText value="Prezime:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.prezime}" style="font-weight:bold"/>
+
+                    <h:outputText value="JMBG:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.jmbg}" style="font-weight:bold"/>
+
+                    <h:outputText value="Korisnicko ime:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.username}" style="font-weight:bold"/>
+
+                    <h:outputText value="Sifra:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.password}" style="font-weight:bold"/>
+
+                    <h:outputText value="Datum rodjenja:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.datumRodjenja}" style="font-weight:bold">
+                        <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Belgrade"/>
+                    </h:outputText>
+
+                    <h:outputText value="Adresa:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.adresa}" style="font-weight:bold"/>
+
+                    <h:outputText value="Telefon:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.telefon}" style="font-weight:bold"/>
+
+                    <h:outputText value="E-mail:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.email}" style="font-weight:bold"/>
+
+                    <h:outputText value="Pol:" />  
+                    <h:outputText value="#{radSaZaposlenima.selektovaniZaposleni.pol}" style="font-weight:bold"/>
+
+
+                </h:panelGrid>
+
+
+            </p:dialog>
+
+
+        </h:form>
+
+    </h:body>
+</html>

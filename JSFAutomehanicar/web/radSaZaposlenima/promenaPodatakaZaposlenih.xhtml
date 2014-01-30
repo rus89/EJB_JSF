@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Promena podataka zaposlenih</title>
+        
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+        <script type="text/javascript" src="js/jquery-1.8.1.js"> </script>
+        <script type="text/javascript" src="#{request.contextPath}/js/sat.js"></script>
+    </h:head>
+
+
+
+
+    <h:body>
+
+
+        <ui:include src="/meni/meniAdmin.xhtml"/>
+
+        <h:form id="frmPromenaPodataka">
+
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+
+
+            <p class="naslov">Izmena podataka zaposlenih</p>
+
+
+
+            <p:contextMenu for="tblPromenaPodatakaZaposlenih">
+                <p:menuitem id="btnIzmena" value="Izmeni" icon="ui-icon-wrench" action="#{radSaZaposlenima.izmeniZaposlenog()}" ajax="false"/>
+            </p:contextMenu>
+
+
+
+            <p:dataTable id="tblPromenaPodatakaZaposlenih" var="zaposleni" value="#{radSaZaposlenima.listaZaposlenih}" selection="#{radSaZaposlenima.trenutniZaposleni}" selectionMode="single" rowKey="#{zaposleni.sifraZaposlenog}" paginator="true" rows="5" rowsPerPageTemplate="5,10,15" filteredValue="#{radSaZaposlenima.filtriraniZaposleni}" emptyMessage="Nije pronadjen nijedan rezultat!" styleClass="tabela" >
+
+
+                <p:column id="ime" headerText="Ime" filterBy="#{zaposleni.ime}">
+                    <h:outputText value="#{zaposleni.ime}"/>
+                </p:column>
+
+
+                <p:column id="prezime" headerText="Prezime" filterBy="#{zaposleni.prezime}">
+                    <h:outputText value="#{zaposleni.prezime}"/>
+                </p:column>
+
+
+                <p:column id="korisnicko" headerText="Korisnicko ime" filterBy="#{zaposleni.username}">
+                    <h:outputText value="#{zaposleni.username}"/>
+                </p:column>
+
+
+                <p:column id="jmbg" headerText="JMBG" filterBy="#{zaposleni.jmbg}">
+                    <h:outputText value="#{zaposleni.jmbg}"/>
+                </p:column>
+
+
+                <p:column id="datumRodjenja" headerText="Datum rodjenja">
+                    <h:outputText value="#{zaposleni.datumRodjenja}">
+                        <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Belgrade"/>
+                    </h:outputText>
+                </p:column>
+
+
+
+                <f:facet name="footer">                            
+                    <p:commandButton id="btnIzmeni" value="Izmeni" icon="ui-icon-wrench" action="#{radSaZaposlenima.izmeniZaposlenog()}" ajax="false"/>
+                </f:facet>
+
+
+
+            </p:dataTable>
+
+        </h:form>
+
+
+    </h:body>
+</html>

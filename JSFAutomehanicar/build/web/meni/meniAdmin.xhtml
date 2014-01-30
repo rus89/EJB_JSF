@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+    </h:head>
+    <h:body>
+
+        <div class="meniAdmin">
+
+            <h:form id="frmMeniAdmin">
+
+                <p:menubar id="glavniMeni" autoDisplay="false">
+
+                    <p:menuitem id="pocetna" value="Pocetna strana" action="/pocetnaAdmin.xhtml" ajax="false"/>
+
+                    <p:submenu id="zaposleni" label="Zaposleni">
+
+
+                        <p:menuitem id="dodavanje" value="Dodaj zaposlenog" action="#{radSaZaposlenima.dodavanjeZaposlenog()}" ajax="false" icon="ui-icon-plusthick"/>
+
+                        <p:menuitem id="prikazZaposlenih" value="Prikaz svih zaposlenih" action="/radSaZaposlenima/prikazSvihZaposlenih.xhtml" ajax="false" icon="ui-icon-search"/>
+
+                        <p:menuitem id="promenaZaposlenih" value="Promena podataka" action="/radSaZaposlenima/promenaPodatakaZaposlenih.xhtml" ajax="false" icon="ui-icon-wrench"/>
+
+                        <p:menuitem id="brisanjeZaposlenog" value="Brisanje zaposlenih" action="/radSaZaposlenima/brisanjeZaposlenih.xhtml" ajax="false" icon="ui-icon-trash"/>
+
+
+                    </p:submenu>
+
+                    
+                    <p:submenu id="dugovanja" label="Dugovanja">
+
+
+                        <p:menuitem id="unos" value="Unos dugovanja" action="#{radSaDugovanjima.unosDugovanja()}" ajax="false" icon="ui-icon-plusthick"/>
+
+                        <p:menuitem id="prikaz" value="Prikaz svih dugovanja" action="/radSaDugovanjima/prikazSvihDugovanja.xhtml" ajax="false" icon="ui-icon-search"/>
+
+                        <p:menuitem id="izmena" value="Izmena dugovanja" action="/radSaDugovanjima/izmenaDugovanja.xhtml" ajax="false" icon="ui-icon-wrench"/>
+
+                        <p:menuitem id="brisanje" value="Brisanje dugovanja" action="/radSaDugovanjima/brisanjeDugovanja.xhtml" ajax="false" icon="ui-icon-trash"/>
+
+
+                    </p:submenu>
+
+
+                    <p:submenu id="logovanje" label="Logovanje">
+
+                        <p:menuitem id="izlogujSe" value="Izloguj se" action="#{logovanje.izlogujSe()}" ajax="false" icon="ui-icon-closethick"/>
+                    </p:submenu>
+
+                </p:menubar>
+            </h:form>
+
+        </div>
+
+
+
+
+    </h:body>
+</html>
+

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Logovanje</title>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilLogovanje.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+    <h:body>
+
+        <h:form id="Logovanje" styleClass="slick-login">
+            <h:panelGroup>
+                <p:inputText value="#{logovanje.zaposleni.username}" id="username" validatorMessage="Morate uneti korisnicko ime"></p:inputText>
+                <p:focus for="username" id="fokus"/>
+                <br></br>
+                <br></br>
+                <p:message for="username" id="msgUser"/>
+                <br></br>
+                <p:password value="#{logovanje.zaposleni.password}" id="password" validatorMessage="Morate uneti sifru"></p:password>
+                <br></br>
+                <br></br>
+                <p:message for="password" id="msgPassword"/>
+                <br></br>
+                <h:commandButton action="#{logovanje.ulogujKorisnika()}" id="dugmeLogovanje" value="Uloguj se"/>
+                <br></br>
+                <br></br>
+                <p:messages id="poruke" autoUpdate="true" globalOnly="true"/>
+            </h:panelGroup>
+        </h:form>
+
+    </h:body>
+</html>
+

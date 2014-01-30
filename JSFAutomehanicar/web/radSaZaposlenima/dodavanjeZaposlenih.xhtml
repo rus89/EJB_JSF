@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+
+        <h:form rendered="#{radSaZaposlenima.operacija==1}">
+            <title>:: Automehanicar :: Dodavanje zaposlenog</title>
+        </h:form>
+
+        <h:form rendered="#{radSaZaposlenima.operacija==2}">
+            <title>:: Automehanicar :: Izmena zaposlenog</title>
+        </h:form>
+
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+
+
+
+    <h:body>
+
+        <ui:include src="/meni/meniAdmin.xhtml"/>
+
+        <h:form id="frmDodavanjeZaposlenih" class="contact_form" rendered="#{radSaZaposlenima.operacija==1}">
+
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+
+            <p class="naslov">Dodavanje novog zaposlenog</p>
+
+
+            <h:panelGrid columns="3" cellpadding="4" style="margin: 0px auto;">
+
+
+                <h:outputText value="Ime: "/>
+                <p:inputText id="txtIme" value="#{radSaZaposlenima.trenutniZaposleni.ime}" validator="#{radSaZaposlenima.validateIme}">
+                    <p:ajax update="msgIme" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtIme" id="msgIme"/>
+
+                <h:outputText value="Prezime: "/>
+                <p:inputText id="txtPrezime" value="#{radSaZaposlenima.trenutniZaposleni.prezime}" validator="#{radSaZaposlenima.validatePrezime}">
+                    <p:ajax update="msgPrezime" event="keyup"/>
+                </p:inputText>
+                <p:message id="msgPrezime" for="txtPrezime"/>
+
+                <h:outputText value="JMBG: "/>
+                <p:inputMask id="txtJmbg" value="#{radSaZaposlenima.trenutniZaposleni.jmbg}" validator="#{radSaZaposlenima.validateJmbg}"  mask="9999999999999">
+                    <p:ajax update="msgJmbg" event="keyup"/>
+                </p:inputMask>
+                <p:message for="txtJmbg" id="msgJmbg"/>
+
+                <h:outputText value="Korisnicko ime: "/>
+                <p:inputText id="txtKorisnickoIme" value="#{radSaZaposlenima.trenutniZaposleni.username}" validator="#{radSaZaposlenima.validateKorisnickoIme}">
+                    <p:ajax update="msgUser" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtKorisnickoIme" id="msgUser"/>
+
+                <h:outputText value="Sifra: "/>
+                <p:password id="pswSifra" feedback="true" goodLabel="OK" weakLabel="Slaba sifra" strongLabel="Jaka sifra" promptLabel="Molimo vas unesite sifru" validator="#{radSaZaposlenima.validateSifra}" value="#{radSaZaposlenima.trenutniZaposleni.password}" >
+                    <p:ajax update="msgSifra" event="keyup"/>
+                </p:password>
+                <p:message for="pswSifra" id="msgSifra"/>
+
+                <h:outputText value="Datum rodjenja: "/>
+                <p:calendar id="txtDatumRodjenja" value="#{radSaZaposlenima.trenutniZaposleni.datumRodjenja}" yearRange="c-100:c" navigator="true" pattern="dd/MM/yyyy" readonlyInput="true" validatorMessage="Morate uneti datum rodjenja.">
+                    <p:ajax update="msgDatumRodjenja" event="blur"/>
+                </p:calendar>
+                <p:message for="txtDatumRodjenja" id="msgDatumRodjenja"/>
+
+                <h:outputText value="Adresa: "/>
+                <p:inputText id="txtAdresa" value="#{radSaZaposlenima.trenutniZaposleni.adresa}" validatorMessage="Morate uneti adresu.">
+                    <p:ajax update="msgAdresa" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtAdresa" id="msgAdresa"/>
+
+                <h:outputText value="Telefon: "/>
+                <p:inputMask id="txtTelefon" value="#{radSaZaposlenima.trenutniZaposleni.telefon}" validatorMessage="Morate uneti telefon." mask="069/9999999">
+                    <p:ajax update="msgTelefon" event="keyup"/>
+                </p:inputMask>
+                <p:message for="txtTelefon" id="msgTelefon"/>
+
+                <h:outputText value="E-mail: "/>
+                <p:inputText id="txtEmail" value="#{radSaZaposlenima.trenutniZaposleni.email}" validator="#{radSaZaposlenima.validateEmail}">
+                    <p:ajax update="msgEmail" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtEmail" id="msgEmail"/>
+
+                <h:outputText value="Pol: "/>
+                <p:selectOneRadio id="orPol" value="#{radSaZaposlenima.trenutniZaposleni.pol}" validatorMessage="Morate odabrati pol.">
+                    <f:selectItem itemLabel="Muski" itemValue="muski"/>
+                    <f:selectItem itemLabel="Zenski" itemValue="zenski"/>
+                </p:selectOneRadio>
+                <p:message id="msgPol" for="orPol"/>
+
+
+                <p:focus for="txtIme" id="fokusIme"/>
+
+
+                <p:commandButton value="Sacuvaj" onclick="dijalog.show();" style="margin: 0px auto;"/>
+
+
+
+
+            </h:panelGrid>
+
+
+
+
+            <p:confirmDialog id="potvrdaDijalog" message="Da li zelite da sacuvate podatke o zaposlenom?" header="Cuvanje zaposlenog" severity="info" widgetVar="dijalog" closable="false" >
+
+                <p:commandButton id="da" value="DA" update="poruke,frmDodavanjeZaposlenih,fokusIme" oncomplete="dijalog.hide()" action="#{radSaZaposlenima.sacuvajZaposlenog()}"/>
+                <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+            </p:confirmDialog>
+
+        </h:form>
+
+        <h:form id="frmIzmenaZaposlenih" class="contact_form" rendered="#{radSaZaposlenima.operacija==2}">
+
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+
+            <p class="naslov">Promena podataka zaposlenog</p>
+
+
+            <h:panelGrid columns="3" cellpadding="4" style="margin: 0px auto;">
+
+
+                <h:outputText value="Ime: "/>
+                <p:inputText id="txtIme" value="#{radSaZaposlenima.trenutniZaposleni.ime}" validator="#{radSaZaposlenima.validateIme}">
+                    <p:ajax update="msgIme" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtIme" id="msgIme"/>
+
+                <h:outputText value="Prezime: "/>
+                <p:inputText id="txtPrezime" value="#{radSaZaposlenima.trenutniZaposleni.prezime}" validator="#{radSaZaposlenima.validatePrezime}">
+                    <p:ajax update="msgPrezime" event="keyup"/>
+                </p:inputText>
+                <p:message id="msgPrezime" for="txtPrezime"/>
+
+                <h:outputText value="JMBG: "/>
+                <p:inputMask id="txtJmbg" value="#{radSaZaposlenima.trenutniZaposleni.jmbg}" validator="#{radSaZaposlenima.validateJmbg}"  mask="9999999999999">
+                    <p:ajax update="msgJmbg" event="keyup"/>
+                </p:inputMask>
+                <p:message for="txtJmbg" id="msgJmbg"/>
+
+                <h:outputText value="Korisnicko ime: "/>
+                <p:inputText id="txtKorisnickoIme" value="#{radSaZaposlenima.trenutniZaposleni.username}" validator="#{radSaZaposlenima.validateKorisnickoIme}">
+                    <p:ajax update="msgUser" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtKorisnickoIme" id="msgUser"/>
+
+                <h:outputText value="Sifra: "/>
+                <p:password id="pswSifra" feedback="true" goodLabel="OK" weakLabel="Slaba sifra" strongLabel="Jaka sifra" promptLabel="Molimo vas unesite sifru" validator="#{radSaZaposlenima.validateSifra}" value="#{radSaZaposlenima.trenutniZaposleni.password}" >
+                    <p:ajax update="msgSifra" event="keyup"/>
+                </p:password>
+                <p:message for="pswSifra" id="msgSifra"/>
+
+                <h:outputText value="Datum rodjenja: "/>
+                <p:calendar id="txtDatumRodjenja" value="#{radSaZaposlenima.trenutniZaposleni.datumRodjenja}" yearRange="c-100:c" navigator="true" pattern="dd/MM/yyyy" readonlyInput="true" validatorMessage="Morate uneti datum rodjenja.">
+                    <p:ajax update="msgDatumRodjenja" event="blur"/>
+                </p:calendar>
+                <p:message for="txtDatumRodjenja" id="msgDatumRodjenja"/>
+
+                <h:outputText value="Adresa: "/>
+                <p:inputText id="txtAdresa" value="#{radSaZaposlenima.trenutniZaposleni.adresa}" validatorMessage="Morate uneti adresu.">
+                    <p:ajax update="msgAdresa" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtAdresa" id="msgAdresa"/>
+
+                <h:outputText value="Telefon: "/>
+                <p:inputMask id="txtTelefon" value="#{radSaZaposlenima.trenutniZaposleni.telefon}" validatorMessage="Morate uneti telefon." mask="069/9999999">
+                    <p:ajax update="msgTelefon" event="keyup"/>
+                </p:inputMask>
+                <p:message for="txtTelefon" id="msgTelefon"/>
+
+                <h:outputText value="E-mail: "/>
+                <p:inputText id="txtEmail" value="#{radSaZaposlenima.trenutniZaposleni.email}" validator="#{radSaZaposlenima.validateEmail}">
+                    <p:ajax update="msgEmail" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtEmail" id="msgEmail"/>
+
+                <h:outputText value="Pol: "/>
+                <p:selectOneRadio id="orPol" value="#{radSaZaposlenima.trenutniZaposleni.pol}" validatorMessage="Morate odabrati pol.">
+                    <f:selectItem itemLabel="Muski" itemValue="muski"/>
+                    <f:selectItem itemLabel="Zenski" itemValue="zenski"/>
+                </p:selectOneRadio>
+                <p:message id="msgPol" for="orPol"/>
+
+
+                <p:focus for="txtIme" id="fokusIme"/>
+
+
+                <p:commandButton value="Izmeni" onclick="dijalog.show();" style="margin: 0px auto;"/>
+
+            </h:panelGrid>
+
+
+            <p:confirmDialog id="potvrdaDijalog" message="Da li zelite da sacuvate podatke o zaposlenom?" header="Cuvanje zaposlenog" severity="info" widgetVar="dijalog" closable="false" >
+
+                <p:commandButton id="da" value="DA" update="poruke,frmIzmenaZaposlenih,fokusIme" oncomplete="dijalog.hide()" action="#{radSaZaposlenima.sacuvajZaposlenog()}"/>
+                <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+            </p:confirmDialog>
+
+        </h:form>
+
+    </h:body>
+</html>

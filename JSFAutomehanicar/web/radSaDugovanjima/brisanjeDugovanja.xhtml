@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Brisanje dugovanja</title>        
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+
+    <h:body>
+        
+        <ui:include src="/meni/meniAdmin.xhtml"/>
+        
+        <h:form id="frmBrisanjeDugovanja">
+                        
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+            <p class="naslov">Brisanje dugovanja</p>
+
+            <p:contextMenu for="tblBrisanje">                        
+                <p:menuitem value="Obrisi" icon="ui-icon-close" onclick="dijalog.show()"/>                        
+            </p:contextMenu>
+
+            <p:confirmDialog id="brisanjeDijalog" message="Da li sigurno zelite da obrisete dugovanje?" header="Brisanje dugovanja" severity="alert" widgetVar="dijalog" closable="false" >
+
+                <p:commandButton id="da" value="DA" update="poruke,frmBrisanjeDugovanja" oncomplete="dijalog.hide()" action="#{radSaDugovanjima.obrisiDugovanje()}"/>
+                <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+
+            </p:confirmDialog>
+
+            <p:dataTable id="tblBrisanje" value="#{radSaDugovanjima.listaDugovanja}" var="dugovanje" filteredValue="#{radSaDugovanjima.filtriranaDugovanja}" paginator="true" rows="5" rowsPerPageTemplate="5,10,15" emptyMessage="Nije pronadjen nijedan rezultat!" rowKey="#{dugovanje.sifraDugovanja}" selection="#{radSaDugovanjima.trenutnoDugovanje}" selectionMode="single" styleClass="tabela">
+
+                <p:column id="sifra" headerText="Sifra" filterBy="#{dugovanja.sifraDugovanja}">
+                    <h:outputText value="#{dugovanje.sifraDugovanja}"/>
+                </p:column>
+
+                <p:column id="vrednost" headerText="Vrednost dugovanja" filterBy="#{dugovanje.vrednostDugovanja}">                        
+                    <h:outputText value="#{dugovanje.vrednostDugovanja}"/>                            
+                </p:column>
+
+                <p:column id="vlasnik" headerText="Vlasnik automobila" filterBy="#{dugovanje.sifraVlasnika}">                        
+                    <h:outputText value="#{dugovanje.sifraVlasnika}"/>                            
+                </p:column>
+
+                <f:facet name="footer">                            
+                    <p:commandButton id="btnObrisi" value="Obrisi" icon="ui-icon-close" onclick="dijalog.show()"/>
+                </f:facet>
+
+            </p:dataTable>
+        </h:form>
+
+    </h:body>
+</html>

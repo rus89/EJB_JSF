@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+
+        <h:form rendered="#{radSaVlasnikomAutomobila.operacija==1}">
+            <title>:: Automehanicar :: Unos vlasnika automobila</title>
+        </h:form>
+
+        <h:form rendered="#{radSaVlasnikomAutomobila.operacija==2}">
+            <title>:: Automehanicar :: Izmena vlasnika automobila</title>
+        </h:form>
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+
+
+
+    <h:body>
+
+        <ui:include src="/meni/meniKlijent.xhtml"/>
+
+        <div class="mainAdmin">
+
+
+            <div class="container">
+
+
+                <h:form id="frmDodavanjeVlasnika" class="contact_form" rendered="#{radSaVlasnikomAutomobila.operacija==1}">
+
+
+                    <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+
+
+                    <p class="naslov">Unos novog vlasnika automobila</p>
+
+
+                    <h:panelGrid columns="3" cellpadding="4" style="margin: 0px auto;">
+
+
+
+                        <h:outputText value="Ime: "/>
+                        <p:inputText id="txtIme" value="#{radSaVlasnikomAutomobila.vlasnikAutomobila.ime}" validator="#{radSaVlasnikomAutomobila.validateIme}" >
+                            <p:ajax update="msgIme" event="keyup"/>
+                        </p:inputText>
+                        <p:message for="txtIme" id="msgIme"/>
+
+
+
+                        <h:outputText value="Prezime: "/>
+                        <p:inputText id="txtPrezime" value="#{radSaVlasnikomAutomobila.vlasnikAutomobila.prezime}" validator="#{radSaVlasnikomAutomobila.validatePrezime}" >
+                            <p:ajax update="msgPrezime" event="keyup"/>
+                        </p:inputText>
+                        <p:message for="txtPrezime" id="msgPrezime"/>
+
+
+
+                        <h:outputText value="JMBG: "/>
+                        <p:inputMask id="txtJmbg" value="#{radSaVlasnikomAutomobila.vlasnikAutomobila.jmbg}" mask="9999999999999" validator="#{radSaVlasnikomAutomobila.validateJmbg}" >
+                            <p:ajax update="msgJmbg" event="keyup"/>
+                        </p:inputMask>
+                        <p:message for="txtJmbg" id="msgJmbg"/>
+
+
+                        <p:focus id="fokusIme" for="txtIme"/>
+
+
+                        <p:commandButton value="Sacuvaj" onclick="dijalog.show()" style="margin: 0px auto;"/>
+
+
+                    </h:panelGrid>
+
+
+
+
+                    <p:confirmDialog id="potvrdaDijalog" message="Da li zelite da sacuvate podatke o vlasniku automobila?" header="Cuvanje valsnika automobila" severity="info" widgetVar="dijalog" closable="false">
+
+                        <p:commandButton id="da" value="DA" update="poruke,frmDodavanjeVlasnika,fokusIme" oncomplete="dijalog.hide()" action="#{radSaVlasnikomAutomobila.sacuvajVlasnika()}"/>
+                        <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+                    </p:confirmDialog>
+
+
+
+
+                </h:form>
+
+                <h:form id="frmPromenaPodatakaVlasnika" class="contact_form" rendered="#{radSaVlasnikomAutomobila.operacija==2}">
+
+                    <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+                    <p class="naslov">Promena podataka vlasnika automobila</p>
+
+                    <h:panelGrid columns="3" cellpadding="4" style="margin: 0px auto;">
+
+                        <h:outputText value="Ime: "/>
+                        <p:inputText id="txtIme" value="#{radSaVlasnikomAutomobila.vlasnikAutomobila.ime}" validator="#{radSaVlasnikomAutomobila.validateIme}" >
+                            <p:ajax update="msgIme" event="keyup"/>
+                        </p:inputText>
+                        <p:message for="txtIme" id="msgIme"/>
+
+                        <h:outputText value="Prezime: "/>
+                        <p:inputText id="txtPrezime" value="#{radSaVlasnikomAutomobila.vlasnikAutomobila.prezime}" validator="#{radSaVlasnikomAutomobila.validatePrezime}" >
+                            <p:ajax update="msgPrezime" event="keyup"/>
+                        </p:inputText>
+                        <p:message for="txtPrezime" id="msgPrezime"/>
+
+                        <h:outputText value="JMBG: "/>
+                        <p:inputMask id="txtJmbg" value="#{radSaVlasnikomAutomobila.vlasnikAutomobila.jmbg}" mask="9999999999999" validator="#{radSaVlasnikomAutomobila.validateJmbg}" >
+                            <p:ajax update="msgJmbg" event="keyup"/>
+                        </p:inputMask>
+                        <p:message for="txtJmbg" id="msgJmbg"/>
+
+                        <p:focus id="fokusIme" for="txtIme"/>
+
+                        <p:commandButton value="Izmeni" onclick="dijalog.show()" style="margin: 0px auto;"/>
+                    </h:panelGrid>
+
+                    <p:confirmDialog id="potvrdaDijalog" message="Da li zelite da sacuvate izmene o vlasniku automobila?" header="Cuvanje izmena o valsnika automobila" severity="info" widgetVar="dijalog" closable="false">
+
+                        <p:commandButton id="da" value="DA" update="poruke,frmPromenaPodatakaVlasnika,fokusIme" oncomplete="dijalog.hide()" action="#{radSaVlasnikomAutomobila.sacuvajVlasnika()}"/>
+                        <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+                    </p:confirmDialog>
+
+                </h:form>
+
+            </div>
+
+
+
+
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Prikaz svih automobila</title>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+
+
+
+    <h:body>
+
+        <ui:include src="/meni/meniKlijent.xhtml"/>
+
+
+        <h:form id="frmPrikazAutomobila">
+
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+
+            <p class="naslov">Prikaz svih automobila</p>
+
+            <p:dataTable id="tblPrikazSvihAutomobila" var="automobili" value="#{radSaAutomobilima.listaAutomobila}" widgetVar="automobiliTabela" paginator="true" rows="5" rowsPerPageTemplate="5,10,15" filteredValue="#{radSaAutomobilima.filtriraniAutomobili}" emptyMessage="Nije pronadjen nijedan rezultat!" styleClass="tabela" >
+
+                <p:column id="sifra" headerText="Sifra automobila" filterBy="#{automobili.sifraAutomobila}">
+                    <h:outputText value="#{automobili.sifraAutomobila}"/>
+                </p:column>
+
+                <p:column id="ime" headerText="Broj registracije" filterBy="#{automobili.brojRegistracije}">
+                    <h:outputText value="#{automobili.brojRegistracije}"/>
+                </p:column>
+
+
+                <p:column id="prezime" headerText="Marka automobila" filterBy="#{automobili.model.sifraMarke}">
+                    <h:outputText value="#{automobili.model.sifraMarke}"/>
+                </p:column>
+
+
+                <p:column id="korisnicko" headerText="Model automobila" filterBy="#{automobili.model}">
+                    <h:outputText value="#{automobili.model}"/>
+                </p:column>
+
+
+                <p:column id="jmbg" headerText="Vlasnik" filterBy="#{automobili.sifraVlasnika}">
+                    <h:outputText value="#{automobili.sifraVlasnika}"/>
+                </p:column>
+
+                <p:column style="width: 4%;">
+                    <p:commandButton id="btnDetalji" update=":frmPrikazAutomobila:detalji" oncomplete="detaljiAutomobila.show()" icon="ui-icon-search" title="Detalji">
+                        <f:setPropertyActionListener value="#{automobili}" target="#{radSaAutomobilima.selektovaniAutomobil}"/>
+                    </p:commandButton>
+                </p:column>
+
+
+            </p:dataTable>
+
+
+            <p:dialog header="Detalji o automobilu" widgetVar="detaljiAutomobila" resizable="false" id="automobiliDijalog" showEffect="fade" hideEffect="fade" modal="true">
+
+                <h:panelGrid id="detalji" columns="2" cellpadding="4" style="margin: 0px auto;">
+
+                    <h:outputText value="Sifra automobila:" />  
+                    <h:outputText value="#{radSaAutomobilima.selektovaniAutomobil.sifraAutomobila}" style="font-weight:bold"/>
+
+                    <h:outputText value="Broj registracije:" />  
+                    <h:outputText value="#{radSaAutomobilima.selektovaniAutomobil.brojRegistracije}" style="font-weight:bold"/>
+                    
+                    <h:outputText value="Marka automobila:" />  
+                    <h:outputText value="#{radSaAutomobilima.selektovaniAutomobil.model.sifraMarke}" style="font-weight:bold"/>
+                    
+                    <h:outputText value="Model automobila:" />  
+                    <h:outputText value="#{radSaAutomobilima.selektovaniAutomobil.model}" style="font-weight:bold"/>
+                   
+                    <h:outputText value="Vlasnik automobila:" />  
+                    <h:outputText value="#{radSaAutomobilima.selektovaniAutomobil.sifraVlasnika}" style="font-weight:bold"/>
+
+                </h:panelGrid>
+
+
+            </p:dialog>
+
+        </h:form>
+    </h:body>
+</html>
+

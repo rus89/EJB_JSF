@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Brisanje vlasnika automobila</title>        
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+
+    <h:body>
+
+        <ui:include src="/meni/meniKlijent.xhtml"/>
+
+        <div class="mainAdmin">
+
+            <div class="container">
+
+
+                <h:form id="frmBrisanjeVlasnika">
+
+
+                    <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+                    <p class="naslov">Brisanje vlasnika automobila</p>
+
+                    <p:contextMenu for="tblBrisanjeVlasnika">                        
+                        <p:menuitem value="Obrisi" icon="ui-icon-close" onclick="dijalog.show()"/>                        
+                    </p:contextMenu>
+
+                    <p:confirmDialog id="brisanjeDijalog" message="Da li sigurno zelite da obrisete vlasnika automobila?" header="Brisanje vlasnika automobila" severity="alert" widgetVar="dijalog" closable="false" >
+
+
+                        <p:commandButton id="da" value="DA" update="poruke,frmBrisanjeVlasnika" oncomplete="dijalog.hide()" action="#{radSaVlasnikomAutomobila.obrisiVlasnika()}"/>
+                        <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+
+                    </p:confirmDialog>
+
+
+                    <p:dataTable id="tblBrisanjeVlasnika" var="vlasnik" value="#{radSaVlasnikomAutomobila.listaVlasnika}" paginator="true" rows="5" rowsPerPageTemplate="5,10,15" filteredValue="#{radSaVlasnikomAutomobila.filtriraniVlasnici}" emptyMessage="Nije pronadjen nijedan vlasnik automobila!" rowKey="#{vlasnik.jmbg}" selection="#{radSaVlasnikomAutomobila.vlasnikAutomobila}" selectionMode="single" styleClass="tabela" >
+                        
+                        <p:column id="sifra" headerText="Sifra" filterBy="#{vlasnik.sifraVlasnika}" sortBy="#{vlasnik.sifraVlasnika}">
+                            <h:outputText value="#{vlasnik.sifraVlasnika}"/>
+                        </p:column>
+
+                        <p:column id="ime" headerText="Ime" filterBy="#{vlasnik.ime}" sortBy="#{vlasnik.ime}">
+                            <h:outputText value="#{vlasnik.ime}"/>
+                        </p:column>
+
+
+                        <p:column id="prezime" headerText="Prezime" filterBy="#{vlasnik.prezime}" sortBy="#{vlasnik.prezime}">
+                            <h:outputText value="#{vlasnik.prezime}"/>
+                        </p:column>
+
+
+                        <p:column id="jmbg" headerText="JMBG" filterBy="#{vlasnik.jmbg}" sortBy="#{vlasnik.jmbg}">
+                            <h:outputText value="#{vlasnik.jmbg}"/>
+                        </p:column>
+
+
+                        <f:facet name="footer">                            
+                            <p:commandButton id="btnObrisi" value="Obrisi" icon="ui-icon-close" onclick="dijalog.show()"/>
+                        </f:facet>
+
+
+
+                    </p:dataTable>
+
+                </h:form>
+
+            </div>
+
+
+        </div>
+    </h:body>
+</html>

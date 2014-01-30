@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>:: Automehanicar :: Prikaz svih dugovanja</title>        
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stilSat.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+    </h:head>
+
+
+
+
+    <h:body>
+
+        <ui:include src="/meni/meniAdmin.xhtml"/>
+      
+
+        <h:form id="frmPrikazDugovanja">
+            
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+            <p class="naslov">Prikaz svih dugovanja</p>
+
+
+            <p:dataTable id="tblPrikazSvihDugovanja" var="dugovanja" value="#{radSaDugovanjima.listaDugovanja}" widgetVar="dugovanjaTabela" paginator="true" rows="5" rowsPerPageTemplate="5,10,15" filteredValue="#{radSaDugovanjima.filtriranaDugovanja}" emptyMessage="Nije pronadjeno nijedno dugovanje!" styleClass="tabela">
+
+
+
+                <p:column id="sifra" headerText="Sifra" filterBy="#{dugovanja.sifraDugovanja}">
+                    <h:outputText value="#{dugovanja.sifraDugovanja}"/>
+                </p:column>
+
+
+                <p:column id="vrednost" headerText="Vrednost" filterBy="#{dugovanja.vrednostDugovanja}">
+                    <h:outputText value="#{dugovanja.vrednostDugovanja}"/>
+                </p:column>
+
+
+                <p:column id="vlasnik" headerText="Vlasnik automobila" filterBy="#{dugovanja.sifraVlasnika}">
+                    <h:outputText value="#{dugovanja.sifraVlasnika}"/>
+                </p:column>
+                
+                <p:column style="width: 4%;">
+                    <p:commandButton id="btnDetalji" update=":frmPrikazDugovanja:detalji" oncomplete="detaljiZaposlenog.show()" icon="ui-icon-search" title="Detalji">
+                        <f:setPropertyActionListener value="#{dugovanja}" target="#{radSaDugovanjima.selektovanoDugovanje}"/>
+                    </p:commandButton>
+                </p:column>
+
+
+
+            </p:dataTable>
+
+            <p:dialog header="Detalji o zaposlenom" widgetVar="detaljiZaposlenog" resizable="false" id="dugovanjeDijalog" showEffect="fade" hideEffect="fade" modal="true">
+
+                <h:panelGrid id="detalji" columns="2" cellpadding="4" style="margin: 0px auto;">
+
+                    <h:outputText value="Sifra dugovanja:" />  
+                    <h:outputText value="#{radSaDugovanjima.selektovanoDugovanje.sifraDugovanja}" style="font-weight:bold"/>
+
+                    <h:outputText value="Vrednost:" />  
+                    <h:outputText value="#{radSaDugovanjima.selektovanoDugovanje.vrednostDugovanja}" style="font-weight:bold"/>
+
+                    <h:outputText value="Vlasnik automobila:" />  
+                    <h:outputText value="#{radSaDugovanjima.selektovanoDugovanje.sifraVlasnika}" style="font-weight:bold"/>
+                    
+                </h:panelGrid>
+
+
+            </p:dialog>
+
+
+        </h:form>
+
+    </h:body>
+</html>

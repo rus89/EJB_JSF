@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+
+        <h:form rendered="#{radSaAutomobilima.operacija==1}">
+            <title>:: Automehanicar :: Dodavanje automobila</title>
+        </h:form>
+
+        <h:form rendered="#{radSaAutomobilima.operacija==2}">
+            <title>:: Automehanicar :: Izmena automobila</title>
+        </h:form>
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/stil.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/slike/car.png"/>
+
+    </h:head>
+
+
+
+    <h:body>
+
+        <ui:include src="/meni/meniKlijent.xhtml"/>
+
+        <h:form id="frmDodavanjeAutomobila" styleClass="contact_form" rendered="#{radSaAutomobilima.operacija==1}">
+
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+            <p class="naslov">Dodavanje novog automobila</p>
+
+
+            <h:panelGrid columns="3" cellpadding="4" >
+
+                <h:outputText value="Broj registracije: "/>
+                <p:inputText id="txtRegistracija" value="#{radSaAutomobilima.automobil.brojRegistracije}" validator="#{radSaAutomobilima.validateBrojRegistracije}" style="width: 190px;" >
+                    <p:ajax update="msgRegistracija" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtRegistracija" id="msgRegistracija"/>
+
+
+                <h:outputText value="Marka automobila: "/>
+                <p:selectOneMenu style="width: 190px;" converter="markaKonverter" >
+
+                    <f:selectItems value="#{radSaAutomobilima.vratiListuMarkeAutomobilaZaCombo()}"/>
+                    
+
+                </p:selectOneMenu>
+
+                <br/>
+
+                <h:outputText value="Model automobila: "/>
+                <p:selectOneMenu id="modeli" converter="modelKonverter" value="#{radSaAutomobilima.automobil.model}" style="width: 190px;">
+
+                    <f:selectItems value="#{radSaAutomobilima.vratiListuModelaAutomobilaZaOdredjenuMarkuZaCombo()}"/>
+                    
+                </p:selectOneMenu>
+
+                <br/>
+
+                <h:outputText value="Vlasnik automobila: "/>
+                <p:selectOneMenu converter="konverterVlasnik" value="#{radSaAutomobilima.automobil.sifraVlasnika}" style="width: 190px;">
+
+                    <f:selectItems value="#{radSaVlasnikomAutomobila.vratiListuVlasnikaAutomobilaZaCombo()}"/>
+
+                </p:selectOneMenu>
+
+                <br/>
+
+
+                <p:focus for="txtRegistracija" id="fokusRegistracija"/>
+
+
+                <p:commandButton value="Sacuvaj" action="#{radSaAutomobilima.sacuvajAutomobil()}" ajax="false" update="poruke" />
+
+
+            </h:panelGrid>
+
+
+            <p:confirmDialog id="potvrdaDijalog" message="Da li zelite da sacuvate podatke o automobilu?" header="Cuvanje automobila" severity="info" widgetVar="dijalog" closable="false">
+
+                <p:commandButton id="da" value="DA" update="poruke,frmDodavanjeAutomobila,fokusRegistracija" oncomplete="dijalog.hide()" action="#{radSaAutomobilima.sacuvajAutomobil()}"/>
+                <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+            </p:confirmDialog>
+
+        </h:form>
+
+
+        <h:form id="frmIzmenaAutomobila" styleClass="contact_form" rendered="#{radSaAutomobilima.operacija==2}">
+
+
+            <p:growl id="poruke" autoUpdate="true" globalOnly="true" life="3000"/>
+
+            <p class="naslov">Promena podataka o automobilima</p>
+
+
+            <h:panelGrid columns="3" cellpadding="4" >
+
+                <h:outputText value="Broj registracije: "/>
+                <p:inputText id="txtRegistracija" value="#{radSaAutomobilima.automobil.brojRegistracije}" style="width: 190px;" validator="#{radSaAutomobilima.validateBrojRegistracije}">
+                    <p:ajax update="msgRegistracija" event="keyup"/>
+                </p:inputText>
+                <p:message for="txtRegistracija" id="msgRegistracija"/>
+
+
+                <h:outputText value="Marka automobila: "/>
+                <p:selectOneMenu style="width: 190px;">
+
+                    <f:selectItems value="#{radSaAutomobilima.listaMarkeAutomobila}"/>
+
+                </p:selectOneMenu>
+
+                <br/>
+
+                <h:outputText value="Model automobila: "/>
+                <p:selectOneMenu id="modeli" converter="modelKonverter" value="#{radSaAutomobilima.automobil.model}" style="width: 190px;">
+
+                    <f:selectItems value="#{radSaAutomobilima.vratiListuModelaAutomobilaZaOdredjenuMarkuZaCombo()}"/>
+                    
+                </p:selectOneMenu>
+
+                <br/>
+
+                <h:outputText value="Vlasnik automobila: "/>
+                <p:selectOneMenu converter="konverterVlasnik" value="#{radSaAutomobilima.automobil.sifraVlasnika}" style="width: 190px;">
+
+                    <f:selectItems value="#{radSaVlasnikomAutomobila.vratiListuVlasnikaAutomobilaZaCombo()}"/>
+
+                </p:selectOneMenu>
+
+                <br/>
+
+
+                <p:focus for="txtRegistracija" id="fokusRegistracija"/>
+
+
+                <p:commandButton value="Sacuvaj" action="#{radSaAutomobilima.sacuvajAutomobil()}" ajax="false" update="poruke" />
+
+
+            </h:panelGrid>
+
+
+            <p:confirmDialog id="potvrdaDijalog" message="Da li zelite da sacuvate izmene o automobilu?" header="Cuvanje izmena o automobilu" severity="info" widgetVar="dijalog" closable="false">
+
+                <p:commandButton id="da" value="DA" update="poruke,frmIzmenaAutomobila,fokusRegistracija" oncomplete="dijalog.hide()" action="#{radSaAutomobilima.sacuvajAutomobil()}"/>
+                <p:commandButton id="ne" value="NE" onclick="dijalog.hide()"/>
+
+            </p:confirmDialog>
+
+
+
+
+        </h:form>
+
+    </h:body>
+</html>
+
